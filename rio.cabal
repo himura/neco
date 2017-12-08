@@ -38,10 +38,12 @@ library
     , http-client >= 0.4.0
     , http-client-tls
     , http-types
+    , text
   exposed-modules:
       Network.RIO
       Network.RIO.Filter.Request.BasicAuth
       Network.RIO.Filter.Request.OAuth1
+      Network.RIO.Filter.Request.OAuth2
       Network.RIO.Filter.Response
       Network.RIO.Filter.Response.Attoparsec
       Network.RIO.Filter.Response.ByteString
@@ -67,6 +69,7 @@ test-suite rio-test
     , http-client >= 0.4.0
     , http-client-tls
     , http-types
+    , text
     , rio
     , base64-bytestring
     , lens
