@@ -39,8 +39,11 @@ library
     , http-types
   exposed-modules:
       Network.RIO
-      Network.RIO.Filter.JSONResponse
-      Network.RIO.HttpClient
+      Network.RIO.Filter.Response
+      Network.RIO.Filter.Response.Attoparsec
+      Network.RIO.Filter.Response.ByteString
+      Network.RIO.Filter.Response.JSON
+      Network.RIO.Service.HttpClient
       Network.RIO.Types
   other-modules:
       Paths_rio

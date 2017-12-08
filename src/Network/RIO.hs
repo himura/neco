@@ -6,7 +6,9 @@ module Network.RIO
     , makeRequestFilter
     , makeResponseFilter
 
-    , makeHttpClientService
+    , httpClientService
+
+    , module Network.RIO.Filter.Response
 
     -- * re-exports
     , module Network.HTTP.Client
@@ -14,6 +16,7 @@ module Network.RIO
     ) where
 
 import Network.RIO.Types
-import Network.RIO.HttpClient
+import Network.RIO.Service.HttpClient
+import Network.RIO.Filter.Response
 import Network.HTTP.Client
 import Network.HTTP.Client.TLS
