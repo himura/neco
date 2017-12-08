@@ -39,6 +39,7 @@ library
     , http-types
   exposed-modules:
       Network.RIO
+      Network.RIO.Filter.JSONResponse
       Network.RIO.HttpClient
       Network.RIO.Types
   other-modules:
