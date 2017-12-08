@@ -1,5 +1,6 @@
 module Network.RIO.Filter.JSONResponse
     ( jsonResponseFilter
+    , parseJSONFromBodyReader
     ) where
 
 import Data.Aeson
