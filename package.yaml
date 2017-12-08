@@ -42,3 +42,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - rio
+    - tasty >= 0.7
+    - tasty-hunit
+    - tasty-quickcheck
+    - tasty-th
