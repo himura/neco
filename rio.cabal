@@ -38,6 +38,8 @@ library
     , http-client-tls
     , http-types
   exposed-modules:
+      Network.RIO
+      Network.RIO.HttpClient
       Network.RIO.Types
   other-modules:
       Paths_rio

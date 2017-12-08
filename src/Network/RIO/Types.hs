@@ -1,7 +1,13 @@
-module Network.RIO.Types where
+module Network.RIO.Types
+    ( Service
+    , Filter
+    , SimpleFilter
+    , makeFilter
+    , makeRequestFilter
+    , makeResponseFilter
+    ) where
 
 import Control.Monad
-import Network.HTTP.Client
 
 type Service m req res r = req -> (res -> m r) -> m r
 type Filter m reqIn reqOut resOut resIn r
@@ -23,9 +29,3 @@ makeRequestFilter f = makeFilter f return
 makeResponseFilter ::
        Monad m => (resOut -> m resIn) -> Filter m req req resOut resIn r
 makeResponseFilter = makeFilter return
-
-toService ::
-       Filter IO req Request (Response BodyReader) res r
-    -> Manager
-    -> Service IO req res r
-toService filt mgr = filt $ flip withResponse mgr
