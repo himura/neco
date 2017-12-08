@@ -42,6 +42,7 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - rio
+    - base64-bytestring
     - lens
     - lens-aeson
     - tasty >= 0.7
