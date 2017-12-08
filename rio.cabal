@@ -33,6 +33,7 @@ library
       base >= 4.7 && < 5
     , aeson
     , attoparsec
+    , authenticate-oauth
     , bytestring >= 0.10.2
     , http-client >= 0.4.0
     , http-client-tls
@@ -40,6 +41,7 @@ library
   exposed-modules:
       Network.RIO
       Network.RIO.Filter.Request.BasicAuth
+      Network.RIO.Filter.Request.OAuth1
       Network.RIO.Filter.Response
       Network.RIO.Filter.Response.Attoparsec
       Network.RIO.Filter.Response.ByteString
@@ -60,6 +62,7 @@ test-suite rio-test
       base >= 4.7 && < 5
     , aeson
     , attoparsec
+    , authenticate-oauth
     , bytestring >= 0.10.2
     , http-client >= 0.4.0
     , http-client-tls
