@@ -7,6 +7,8 @@ module Network.RIO.Types
     , makeRequestFilterM
     , makeResponseFilter
     , makeResponseFilterM
+
+    , unwrapResponseFilter
     ) where
 
 import Control.Monad
@@ -43,3 +45,8 @@ makeResponseFilter f service req respond = service req $ respond . f
 makeResponseFilterM ::
        Monad m => (resOut -> m resIn) -> Filter req req resOut resIn (m r)
 makeResponseFilterM f service req respond = service req $ f >=> respond
+
+unwrapResponseFilter :: Filter resOut resOut resOut resIn resIn -> resOut -> resIn
+unwrapResponseFilter filt a = filt s a id
+  where
+    s req respond = respond req
