@@ -31,15 +31,15 @@ makeFilterM requestFilter responseFilter service req respond =
     requestFilter req >>= flip service (responseFilter >=> respond)
 
 makeRequestFilter :: (reqIn -> reqOut) -> Filter reqIn reqOut res res r
-makeRequestFilter f = makeFilter f id
+makeRequestFilter f service req = service (f req)
 
 makeRequestFilterM ::
        Monad m => (reqIn -> m reqOut) -> Filter reqIn reqOut res res (m r)
-makeRequestFilterM f = makeFilterM f return
+makeRequestFilterM f service req respond = f req >>= flip service respond
 
 makeResponseFilter :: (resOut -> resIn) -> Filter req req resOut resIn r
-makeResponseFilter = makeFilter id
+makeResponseFilter f service req respond = service req $ respond . f
 
 makeResponseFilterM ::
        Monad m => (resOut -> m resIn) -> Filter req req resOut resIn (m r)
-makeResponseFilterM = makeFilterM return
+makeResponseFilterM f service req respond = service req $ f >=> respond
