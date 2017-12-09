@@ -8,7 +8,12 @@ module Network.RIO.Types
     , makeResponseFilter
     , makeResponseFilterM
 
+    , unwrap
+    , unwrapRequestFilter
     , unwrapResponseFilter
+
+    , fmapRequestFilter
+    , fmapResponseFilter
     ) where
 
 import Control.Monad
@@ -46,7 +51,17 @@ makeResponseFilterM ::
        Monad m => (resOut -> m resIn) -> Filter req req resOut resIn (m r)
 makeResponseFilterM f service req respond = service req $ f >=> respond
 
+unwrap :: Filter a i i b b -> a -> b
+unwrap filt a = filt (flip id) a id
+
+unwrapRequestFilter :: Filter reqIn reqOut reqOut reqOut reqOut -> reqIn -> reqOut
+unwrapRequestFilter = unwrap
+
 unwrapResponseFilter :: Filter resOut resOut resOut resIn resIn -> resOut -> resIn
-unwrapResponseFilter filt a = filt s a id
-  where
-    s req respond = respond req
+unwrapResponseFilter = unwrap
+
+fmapRequestFilter :: Functor f => Filter reqIn reqOut reqOut reqOut reqOut -> Filter (f reqIn) (f reqOut) req req r
+fmapRequestFilter filt = makeRequestFilter $ fmap (unwrapRequestFilter filt)
+
+fmapResponseFilter :: Functor f => Filter resOut resOut resOut resIn resIn -> Filter req req (f resOut) (f resIn) r
+fmapResponseFilter filt = makeResponseFilter $ fmap (unwrapResponseFilter filt)
