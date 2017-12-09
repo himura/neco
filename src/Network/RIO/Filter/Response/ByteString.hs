@@ -8,11 +8,11 @@ import qualified Data.ByteString.Lazy as L
 import Network.HTTP.Client
 import Network.RIO.Types
 
-bsChunksResponseFilter :: Filter IO i i (Response BodyReader) (Response [S.ByteString]) r
-bsChunksResponseFilter = makeResponseFilter $ mapM consumeBodyReader
+bsChunksResponseFilter :: Filter i i (Response BodyReader) (Response [S.ByteString]) (IO r)
+bsChunksResponseFilter = makeResponseFilterM $ mapM consumeBodyReader
 
-lbsResponseFilter :: Filter IO i i (Response BodyReader) (Response L.ByteString) r
-lbsResponseFilter = makeResponseFilter $ mapM (fmap L.fromChunks . consumeBodyReader)
+lbsResponseFilter :: Filter i i (Response BodyReader) (Response L.ByteString) (IO r)
+lbsResponseFilter = makeResponseFilterM $ mapM (fmap L.fromChunks . consumeBodyReader)
 
 consumeBodyReader :: BodyReader -> IO [S.ByteString]
 consumeBodyReader reader = go id

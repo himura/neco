@@ -1,31 +1,45 @@
 module Network.RIO.Types
     ( Service
     , Filter
-    , SimpleFilter
     , makeFilter
+    , makeFilterM
     , makeRequestFilter
+    , makeRequestFilterM
     , makeResponseFilter
+    , makeResponseFilterM
     ) where
 
 import Control.Monad
 
-type Service m req res r = req -> (res -> m r) -> m r
-type Filter m reqIn reqOut resOut resIn r
-     = Service m reqOut resOut r -> Service m reqIn resIn r
-type SimpleFilter m req res r = Filter m req req res res r
+type Service req res r = req -> (res -> r) -> r
+type Filter reqIn reqOut resOut resIn r
+     = Service reqOut resOut r -> Service reqIn resIn r
 
 makeFilter ::
+       (reqIn -> reqOut)
+    -> (resOut -> resIn)
+    -> Filter reqIn reqOut resOut resIn r
+makeFilter requestFilter responseFilter service req respond =
+    service (requestFilter req) $ respond . responseFilter
+
+makeFilterM ::
        Monad m
     => (reqIn -> m reqOut)
     -> (resOut -> m resIn)
-    -> Filter m reqIn reqOut resOut resIn r
-makeFilter requestFilter responseFilter service req respond =
+    -> Filter reqIn reqOut resOut resIn (m r)
+makeFilterM requestFilter responseFilter service req respond =
     requestFilter req >>= flip service (responseFilter >=> respond)
 
-makeRequestFilter ::
-       Monad m => (reqIn -> m reqOut) -> Filter m reqIn reqOut res res r
-makeRequestFilter f = makeFilter f return
+makeRequestFilter :: (reqIn -> reqOut) -> Filter reqIn reqOut res res r
+makeRequestFilter f = makeFilter f id
 
-makeResponseFilter ::
-       Monad m => (resOut -> m resIn) -> Filter m req req resOut resIn r
-makeResponseFilter = makeFilter return
+makeRequestFilterM ::
+       Monad m => (reqIn -> m reqOut) -> Filter reqIn reqOut res res (m r)
+makeRequestFilterM f = makeFilterM f return
+
+makeResponseFilter :: (resOut -> resIn) -> Filter req req resOut resIn r
+makeResponseFilter = makeFilter id
+
+makeResponseFilterM ::
+       Monad m => (resOut -> m resIn) -> Filter req req resOut resIn (m r)
+makeResponseFilterM = makeFilterM return

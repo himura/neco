@@ -106,9 +106,9 @@ getAccessToken ClientSetting {..} redirectUri grantType code mgr = do
         , ("code", code)
         ]
 
-oauth2RequestFilter :: Monad m => AccessToken -> SimpleFilter m Request res r
+oauth2RequestFilter :: AccessToken -> Filter Request Request res res r
 oauth2RequestFilter accessToken =
-    makeRequestFilter $ return . setOAuth2AuthzHeader accessToken
+    makeRequestFilter $ setOAuth2AuthzHeader accessToken
 
 setOAuth2AuthzHeader :: AccessToken -> Request -> Request
 setOAuth2AuthzHeader token req =

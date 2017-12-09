@@ -1,10 +1,12 @@
 module Network.RIO
     ( Service
     , Filter
-    , SimpleFilter
     , makeFilter
+    , makeFilterM
     , makeRequestFilter
+    , makeRequestFilterM
     , makeResponseFilter
+    , makeResponseFilterM
 
     , httpClientService
 

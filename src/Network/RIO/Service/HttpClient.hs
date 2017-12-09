@@ -5,5 +5,5 @@ module Network.RIO.Service.HttpClient
 import Network.HTTP.Client
 import Network.RIO.Types
 
-httpClientService :: Manager -> Service IO Request (Response BodyReader) r
+httpClientService :: Manager -> Service Request (Response BodyReader) (IO r)
 httpClientService mgr req respond = withResponse req mgr respond
