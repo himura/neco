@@ -1,5 +1,7 @@
 module Network.RIO.Filter.Request.OAuth1
     ( oauth1RequestFilter
+    -- * re-exports
+    , module Web.Authenticate.OAuth
     ) where
 
 import Network.HTTP.Client
