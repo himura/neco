@@ -64,8 +64,13 @@ test-suite rio-test
     , http-client-tls
     , http-types
     , rio
+    , lens
+    , lens-aeson
     , tasty >= 0.7
     , tasty-hunit
     , tasty-quickcheck
     , tasty-th
+    , text
+  other-modules:
+      Filter.Response
   default-language: Haskell2010

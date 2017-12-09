@@ -42,7 +42,10 @@ tests:
     - -with-rtsopts=-N
     dependencies:
     - rio
+    - lens
+    - lens-aeson
     - tasty >= 0.7
     - tasty-hunit
     - tasty-quickcheck
     - tasty-th
+    - text
