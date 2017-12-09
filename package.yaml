@@ -29,10 +29,33 @@ dependencies:
 - http-types
 - text
 
+flags:
+  build-sample:
+    default: False
+    manual: True
+
 ghc-options: -Wall
 
 library:
   source-dirs: src
+
+executables:
+  sample:
+    main:                sample.hs
+    source-dirs:         sample
+    when:
+      - condition: flag(build-sample)
+        then:
+          ghc-options:
+            - -threaded
+            - -rtsopts
+            - -with-rtsopts=-N
+          dependencies:
+           - rio
+           - lens
+           - twitter-types-lens
+        else:
+          buildable: False
 
 tests:
   rio-test:

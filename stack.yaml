@@ -2,5 +2,7 @@ resolver: lts-9.17
 packages:
 - .
 extra-deps: []
-flags: {}
+flags:
+  rio:
+    build-sample: True
 extra-package-dbs: []
