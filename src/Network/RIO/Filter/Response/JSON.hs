@@ -4,6 +4,7 @@ module Network.RIO.Filter.Response.JSON
     ( JSONError (..)
     , jsonResponseFilter
     , fromJSONResponseFilter
+    , fromJSONResponseFilter'
     ) where
 
 import Control.Exception
@@ -26,11 +27,16 @@ jsonResponseFilter = parserResponseFilter json
 fromJSONResponseFilter ::
        FromJSON a
     => Filter i i (Response BodyReader) (Response (Either JSONError a)) (IO r)
-fromJSONResponseFilter =
-    makeResponseFilter (fmap f) . jsonResponseFilter
-  where
-    f (Left err) = Left $ JSONParseError err
-    f (Right value) =
-        case fromJSON value of
-            Success body -> Right body
-            Error err -> Left $ FromJSONError err value
+fromJSONResponseFilter = fmapResponseFilter fromJSONResponseFilter' . jsonResponseFilter
+
+fromJSONResponseFilter' ::
+       FromJSON a
+    => Filter i i (Either String Value) (Either JSONError a) r
+fromJSONResponseFilter' = makeResponseFilter fromJSONEither
+
+fromJSONEither :: FromJSON a => Either String Value -> Either JSONError a
+fromJSONEither (Left err) = Left $ JSONParseError err
+fromJSONEither (Right value) =
+    case fromJSON value of
+        Success body -> Right body
+        Error err -> Left $ FromJSONError err value
