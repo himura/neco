@@ -18,14 +18,14 @@ module Network.RIO.Types
 
 import Control.Monad
 
-type Service req res r = req -> (res -> r) -> r
-type Filter reqIn reqOut resOut resIn r
-     = Service reqOut resOut r -> Service reqIn resIn r
+type Service r req res = req -> (res -> r) -> r
+type Filter r reqIn reqOut resOut resIn
+     = Service r reqOut resOut -> Service r reqIn resIn
 
 makeFilter ::
        (reqIn -> reqOut)
     -> (resOut -> resIn)
-    -> Filter reqIn reqOut resOut resIn r
+    -> Filter r reqIn reqOut resOut resIn
 makeFilter requestFilter responseFilter service req respond =
     service (requestFilter req) $ respond . responseFilter
 
@@ -33,35 +33,35 @@ makeFilterM ::
        Monad m
     => (reqIn -> m reqOut)
     -> (resOut -> m resIn)
-    -> Filter reqIn reqOut resOut resIn (m r)
+    -> Filter (m r) reqIn reqOut resOut resIn
 makeFilterM requestFilter responseFilter service req respond =
     requestFilter req >>= flip service (responseFilter >=> respond)
 
-makeRequestFilter :: (reqIn -> reqOut) -> Filter reqIn reqOut res res r
+makeRequestFilter :: (reqIn -> reqOut) -> Filter r reqIn reqOut res res
 makeRequestFilter f service req = service (f req)
 
 makeRequestFilterM ::
-       Monad m => (reqIn -> m reqOut) -> Filter reqIn reqOut res res (m r)
+       Monad m => (reqIn -> m reqOut) -> Filter (m r) reqIn reqOut res res
 makeRequestFilterM f service req respond = f req >>= flip service respond
 
-makeResponseFilter :: (resOut -> resIn) -> Filter req req resOut resIn r
+makeResponseFilter :: (resOut -> resIn) -> Filter r req req resOut resIn
 makeResponseFilter f service req respond = service req $ respond . f
 
 makeResponseFilterM ::
-       Monad m => (resOut -> m resIn) -> Filter req req resOut resIn (m r)
+       Monad m => (resOut -> m resIn) -> Filter (m r) req req resOut resIn
 makeResponseFilterM f service req respond = service req $ f >=> respond
 
-unwrap :: Filter a i i b b -> a -> b
+unwrap :: Filter b a i i b -> a -> b
 unwrap filt a = filt (flip id) a id
 
-unwrapRequestFilter :: Filter reqIn reqOut reqOut reqOut reqOut -> reqIn -> reqOut
+unwrapRequestFilter :: Filter reqOut reqIn reqOut reqOut reqOut -> reqIn -> reqOut
 unwrapRequestFilter = unwrap
 
-unwrapResponseFilter :: Filter resOut resOut resOut resIn resIn -> resOut -> resIn
+unwrapResponseFilter :: Filter resIn resOut resOut resOut resIn -> resOut -> resIn
 unwrapResponseFilter = unwrap
 
-fmapRequestFilter :: Functor f => Filter reqIn reqOut reqOut reqOut reqOut -> Filter (f reqIn) (f reqOut) req req r
+fmapRequestFilter :: Functor f => Filter reqOut reqIn reqOut reqOut reqOut -> Filter r (f reqIn) (f reqOut) req req
 fmapRequestFilter filt = makeRequestFilter $ fmap (unwrapRequestFilter filt)
 
-fmapResponseFilter :: Functor f => Filter resOut resOut resOut resIn resIn -> Filter req req (f resOut) (f resIn) r
+fmapResponseFilter :: Functor f => Filter resIn resOut resOut resOut resIn -> Filter r req req (f resOut) (f resIn)
 fmapResponseFilter filt = makeResponseFilter $ fmap (unwrapResponseFilter filt)

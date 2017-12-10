@@ -21,17 +21,17 @@ data JSONError
 instance Exception JSONError
 
 jsonResponseFilter ::
-       Filter i i (Response BodyReader) (Response (Either String Value)) (IO r)
+       Filter (IO r) i i (Response BodyReader) (Response (Either String Value))
 jsonResponseFilter = parserResponseFilter json
 
 fromJSONResponseFilter ::
        FromJSON a
-    => Filter i i (Response BodyReader) (Response (Either JSONError a)) (IO r)
+    => Filter (IO r) i i (Response BodyReader) (Response (Either JSONError a))
 fromJSONResponseFilter = fmapResponseFilter fromJSONResponseFilter' . jsonResponseFilter
 
 fromJSONResponseFilter' ::
        FromJSON a
-    => Filter i i (Either String Value) (Either JSONError a) r
+    => Filter r i i (Either String Value) (Either JSONError a)
 fromJSONResponseFilter' = makeResponseFilter fromJSONEither
 
 fromJSONEither :: FromJSON a => Either String Value -> Either JSONError a

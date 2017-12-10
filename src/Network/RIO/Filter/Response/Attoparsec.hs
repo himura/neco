@@ -11,5 +11,5 @@ parseFromBodyReader parser reader = eitherResult <$> parseWith reader parser mem
 
 parserResponseFilter ::
        Parser a
-    -> Filter i i (Response BodyReader) (Response (Either String a)) (IO r)
+    -> Filter (IO r) i i (Response BodyReader) (Response (Either String a))
 parserResponseFilter parser = makeResponseFilterM $ mapM (parseFromBodyReader parser)

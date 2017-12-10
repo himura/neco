@@ -106,7 +106,7 @@ getAccessToken ClientSetting {..} redirectUri grantType code mgr = do
         , ("code", code)
         ]
 
-oauth2RequestFilter :: AccessToken -> Filter Request Request res res r
+oauth2RequestFilter :: AccessToken -> Filter r Request Request res res
 oauth2RequestFilter accessToken =
     makeRequestFilter $ setOAuth2AuthzHeader accessToken
 

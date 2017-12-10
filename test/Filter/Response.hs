@@ -58,7 +58,7 @@ dummyBodyReader bodyChunks = do
                 (x:xs) -> (xs, x)
                 [] -> error "dummyBodyReader: The consumer of BodyReader eats too much"
 
-dummyService :: [S8.ByteString] -> Service req (Response BodyReader) Assertion
+dummyService :: [S8.ByteString] -> Service Assertion req (Response BodyReader)
 dummyService bodyChunks _req respond = do
     bodyReader <- dummyBodyReader bodyChunks
     respond $
@@ -85,7 +85,7 @@ case_lbsResponseFilter = do
     service req $ \res ->
         responseBody res @?= L8.fromChunks body
 
-jsonResponseFilterExample :: Service Request (Response (Either String Value)) Assertion -> Assertion
+jsonResponseFilterExample :: Service Assertion Request (Response (Either String Value)) -> Assertion
 jsonResponseFilterExample service = do
     req <- parseRequest "http://localhost:18080"
     service req $ \res ->
@@ -101,7 +101,7 @@ case_jsonResponseFilterWithPartial = do
     let service = jsonResponseFilter $ dummyService bodyJsonPartial
     jsonResponseFilterExample service
 
-fromJSONResponseFilterExample :: Service Request (Response (Either JSONError CharacterList)) Assertion -> Assertion
+fromJSONResponseFilterExample :: Service Assertion Request (Response (Either JSONError CharacterList)) -> Assertion
 fromJSONResponseFilterExample service = do
     req <- parseRequest "http://localhost:18080"
     service req $ \res ->

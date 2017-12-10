@@ -29,7 +29,7 @@ twitterCredential =
         , ("oauth_token_secret", error "You MUST specify oauth_token_secret")
         ]
 
-twitterService :: FromJSON a => Manager -> Service Request (Response (Either JSONError a)) (IO r)
+twitterService :: FromJSON a => Manager -> Service (IO r) Request (Response (Either JSONError a))
 twitterService mgr =
     fromJSONResponseFilter .
     oauth1RequestFilter twitterOAuth twitterCredential $
