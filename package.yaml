@@ -17,6 +17,7 @@ category:            Network
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
 description:         Please see the README on Github at <https://github.com/himura/rio#readme>
+tested-with:         GHC == 7.8.4, GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.1
 
 dependencies:
 - base >= 4.7 && < 5
