@@ -8,6 +8,10 @@ import qualified Data.ByteString.Lazy as L
 import Network.HTTP.Client
 import Network.RIO.Types
 
+-- for GHC 7.8
+import Data.Traversable
+import Prelude hiding (mapM)
+
 bsChunksResponseFilter :: Filter i i (Response BodyReader) (Response [S.ByteString]) (IO r)
 bsChunksResponseFilter = makeResponseFilterM $ mapM consumeBodyReader
 
@@ -20,5 +24,5 @@ consumeBodyReader reader = go id
     go f = do
         chunk <- reader
         if S.null chunk
-            then return $ f mempty
+            then return $ f []
             else go (f . (chunk :))
