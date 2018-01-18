@@ -15,21 +15,21 @@ import Test.Tasty.TH
 case_basicAuthRequestFilter :: Assertion
 case_basicAuthRequestFilter = do
     let requestFilter = basicAuthRequestFilter "rio" "mikoshiba"
-        service = requestFilter $ \req respond -> do
+        service = requestFilter $ Service $ \req respond -> do
             requestHeaders req @?= [("Authorization", S8.concat ["Basic ", Base64.encode "rio:mikoshiba"])]
             respond ()
     req <- parseRequest "http://localhost:18080/"
-    service req return
+    runService service req return
 
 case_oauth2RequestFilter :: Assertion
 case_oauth2RequestFilter = do
     let accessToken = AccessToken "TestAccessToken" 3600 "RefleshToken" "Bearer"
     let requestFilter = oauth2RequestFilter accessToken
-        service = requestFilter $ \req respond -> do
+        service = requestFilter $ Service $ \req respond -> do
             requestHeaders req @?= [("Authorization", S8.concat ["Bearer TestAccessToken"])]
             respond ()
     req <- parseRequest "http://localhost:18080/"
-    service req return
+    runService service req return
 
 tests :: TestTree
 tests = $(testGroupGenerator)

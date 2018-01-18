@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7d9d72bbc57bb75666dd4e5f3489e664b949b5120533d9a6554fdfe24461fb64
+-- hash: 5fcc76a428d71a7de963fef387ceab2f812e7fd177c6896a14cbbaddc8682198
 
 name:           rio
 version:        0.1.0.0
@@ -45,6 +45,7 @@ library
     , http-client >=0.4.0
     , http-client-tls
     , http-types
+    , profunctors
     , text
   exposed-modules:
       Network.RIO
@@ -76,6 +77,7 @@ executable sample
     , http-client >=0.4.0
     , http-client-tls
     , http-types
+    , profunctors
     , text
   if flag(build-sample)
     ghc-options: -threaded -rtsopts -with-rtsopts=-N
@@ -107,6 +109,7 @@ test-suite rio-test
     , http-types
     , lens
     , lens-aeson
+    , profunctors
     , rio
     , tasty >=0.7
     , tasty-hunit
