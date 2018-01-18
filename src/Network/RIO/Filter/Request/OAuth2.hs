@@ -14,7 +14,6 @@ module Network.RIO.Filter.Request.OAuth2
 
 import Control.Exception
 import Data.Aeson
-import Data.Aeson.Types
 import qualified Data.ByteString.Char8 as S8
 import Data.Char
 import Data.Monoid

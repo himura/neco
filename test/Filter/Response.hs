@@ -15,8 +15,6 @@ import GHC.Generics
 import Network.HTTP.Client.Internal
 import qualified Network.HTTP.Types as HTTP
 import Network.RIO
-import Network.RIO.Filter.Response.Attoparsec
-import Network.RIO.Filter.Response.ByteString
 import Network.RIO.Filter.Response.JSON
 import Test.Tasty
 import Test.Tasty.HUnit
