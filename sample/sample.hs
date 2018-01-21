@@ -29,8 +29,8 @@ twitterCredential =
         , ("oauth_token_secret", error "You MUST specify oauth_token_secret")
         ]
 
-twitterService :: FromJSON a => Manager -> Service (IO r) Request (Response (Either JSONError a))
-twitterService mgr =
+makeTwitterService :: FromJSON a => Manager -> Service IO Request (Response (Either JSONError a))
+makeTwitterService mgr =
     fromJSONResponseFilter .
     oauth1RequestFilter twitterOAuth twitterCredential $
     httpClientService mgr
@@ -38,9 +38,10 @@ twitterService mgr =
 main :: IO ()
 main = do
     mgr <- newManager tlsManagerSettings
+    let service = makeTwitterService mgr
     req <-
         parseRequest "https://api.twitter.com/1.1/statuses/home_timeline.json"
-    twitterService mgr req $ \res ->
+    runService service req $ \res ->
         case responseBody res of
             Left err -> print (err)
             Right (statuses :: [Status]) ->

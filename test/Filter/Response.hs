@@ -56,8 +56,8 @@ dummyBodyReader bodyChunks = do
                 (x:xs) -> (xs, x)
                 [] -> error "dummyBodyReader: The consumer of BodyReader eats too much"
 
-dummyService :: [S8.ByteString] -> Service Assertion req (Response BodyReader)
-dummyService bodyChunks _req respond = do
+dummyService :: [S8.ByteString] -> Service IO req (Response BodyReader)
+dummyService bodyChunks = Service $ \_req respond -> do
     bodyReader <- dummyBodyReader bodyChunks
     respond $
         Response
@@ -73,20 +73,20 @@ case_bsChunksResponseFilter :: Assertion
 case_bsChunksResponseFilter = do
     let service = bsChunksResponseFilter $ dummyService body
     req <- parseRequest "http://localhost:18080"
-    service req $ \res ->
+    runService service req $ \res ->
         responseBody res @?= body
 
 case_lbsResponseFilter :: Assertion
 case_lbsResponseFilter = do
     let service = lbsResponseFilter $ dummyService body
     req <- parseRequest "http://localhost:18080"
-    service req $ \res ->
+    runService service req $ \res ->
         responseBody res @?= L8.fromChunks body
 
-jsonResponseFilterExample :: Service Assertion Request (Response (Either String Value)) -> Assertion
+jsonResponseFilterExample :: Service IO Request (Response (Either String Value)) -> Assertion
 jsonResponseFilterExample service = do
     req <- parseRequest "http://localhost:18080"
-    service req $ \res ->
+    runService service req $ \res ->
         responseBody res ^.. _Right . key "characters" . _Array . traversed . key "name" . _String @?= ["Mikoshiba Rio", "Mikoshiba Rea"]
 
 case_jsonResponseFilter :: Assertion
@@ -99,10 +99,10 @@ case_jsonResponseFilterWithPartial = do
     let service = jsonResponseFilter $ dummyService bodyJsonPartial
     jsonResponseFilterExample service
 
-fromJSONResponseFilterExample :: Service Assertion Request (Response (Either JSONError CharacterList)) -> Assertion
+fromJSONResponseFilterExample :: Service IO Request (Response (Either JSONError CharacterList)) -> Assertion
 fromJSONResponseFilterExample service = do
     req <- parseRequest "http://localhost:18080"
-    service req $ \res ->
+    runService service req $ \res ->
         responseBody res @?=
         Right
             (CharacterList

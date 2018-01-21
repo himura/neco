@@ -8,6 +8,6 @@ import Network.HTTP.Client
 import Network.RIO.Types
 import Web.Authenticate.OAuth
 
-oauth1RequestFilter :: OAuth -> Credential -> Filter (IO r) Request Request res res
+oauth1RequestFilter :: OAuth -> Credential -> Filter IO Request Request res res
 oauth1RequestFilter oauth credential =
     makeRequestFilterM $ signOAuth oauth credential

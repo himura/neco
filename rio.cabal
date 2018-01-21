@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 7d9d72bbc57bb75666dd4e5f3489e664b949b5120533d9a6554fdfe24461fb64
+-- hash: 675309d1c70f9753ac859875d6b2ba6f154a0961862d34959bb375b95f41d85a
 
 name:           rio
 version:        0.1.0.0
@@ -45,7 +45,11 @@ library
     , http-client >=0.4.0
     , http-client-tls
     , http-types
+    , profunctors
     , text
+  if impl(ghc < 8.0)
+    build-depends:
+        transformers
   exposed-modules:
       Network.RIO
       Network.RIO.Filter.Request.BasicAuth
@@ -76,7 +80,11 @@ executable sample
     , http-client >=0.4.0
     , http-client-tls
     , http-types
+    , profunctors
     , text
+  if impl(ghc < 8.0)
+    build-depends:
+        transformers
   if flag(build-sample)
     ghc-options: -threaded -rtsopts -with-rtsopts=-N
     build-depends:
@@ -107,12 +115,16 @@ test-suite rio-test
     , http-types
     , lens
     , lens-aeson
+    , profunctors
     , rio
     , tasty >=0.7
     , tasty-hunit
     , tasty-quickcheck
     , tasty-th
     , text
+  if impl(ghc < 8.0)
+    build-depends:
+        transformers
   other-modules:
       Filter.Request
       Filter.Response

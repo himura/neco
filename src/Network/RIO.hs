@@ -1,5 +1,5 @@
 module Network.RIO
-    ( Service
+    ( Service (..)
     , Filter
     , makeFilter
     , makeFilterM

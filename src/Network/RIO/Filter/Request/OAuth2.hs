@@ -91,12 +91,12 @@ getAccessToken ::
     -> IO AccessToken
 getAccessToken ClientSetting {..} redirectUri grantType code mgr = do
     req <- parseUrlThrow $ T.unpack oauth2TokenUri
-    call (urlEncodedBody params req) $ \res ->
+    runService service (urlEncodedBody params req) $ \res ->
         case responseBody res of
             Right body -> return body
             Left err -> throwIO err
   where
-    call = fromJSONResponseFilter $ httpClientService mgr
+    service = fromJSONResponseFilter $ httpClientService mgr
     params =
         [ ("client_id", T.encodeUtf8 oauth2ClientId)
         , ("client_secret", T.encodeUtf8 oauth2ClientSecret)
@@ -105,7 +105,7 @@ getAccessToken ClientSetting {..} redirectUri grantType code mgr = do
         , ("code", code)
         ]
 
-oauth2RequestFilter :: AccessToken -> Filter r Request Request res res
+oauth2RequestFilter :: AccessToken -> Filter m Request Request res res
 oauth2RequestFilter accessToken =
     makeRequestFilter $ setOAuth2AuthzHeader accessToken
 

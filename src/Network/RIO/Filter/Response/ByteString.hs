@@ -12,10 +12,10 @@ import Network.RIO.Types
 import Data.Traversable
 import Prelude hiding (mapM)
 
-bsChunksResponseFilter :: Filter (IO r) i i (Response BodyReader) (Response [S.ByteString])
+bsChunksResponseFilter :: Filter IO i i (Response BodyReader) (Response [S.ByteString])
 bsChunksResponseFilter = makeResponseFilterM $ mapM consumeBodyReader
 
-lbsResponseFilter :: Filter (IO r) i i (Response BodyReader) (Response L.ByteString)
+lbsResponseFilter :: Filter IO i i (Response BodyReader) (Response L.ByteString)
 lbsResponseFilter = makeResponseFilterM $ mapM (fmap L.fromChunks . consumeBodyReader)
 
 consumeBodyReader :: BodyReader -> IO [S.ByteString]

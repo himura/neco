@@ -17,5 +17,5 @@ parseFromBodyReader parser reader = eitherResult <$> parseWith reader parser S.e
 
 parserResponseFilter ::
        Parser a
-    -> Filter (IO r) i i (Response BodyReader) (Response (Either String a))
+    -> Filter IO i i (Response BodyReader) (Response (Either String a))
 parserResponseFilter parser = makeResponseFilterM $ mapM (parseFromBodyReader parser)

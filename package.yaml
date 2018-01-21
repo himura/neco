@@ -28,7 +28,13 @@ dependencies:
 - http-client >= 0.4.0
 - http-client-tls
 - http-types
+- profunctors
 - text
+
+when:
+  - condition: impl(ghc < 8.0)
+    dependencies:
+      - transformers
 
 flags:
   build-sample:
