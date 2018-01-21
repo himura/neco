@@ -2,7 +2,10 @@ module Network.RIO.Filter.Response
        ( lbsResponseFilter
        , bsChunksResponseFilter
        , parserResponseFilter
+       , JSONError (..)
        , jsonResponseFilter
+       , fromJSONResponseFilter
+       , fromJSONResponseFilter'
        )
        where
 
