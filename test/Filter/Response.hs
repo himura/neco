@@ -16,6 +16,7 @@ import Network.HTTP.Client.Internal
 import qualified Network.HTTP.Types as HTTP
 import Network.RIO
 import Network.RIO.Filter.Response.JSON
+import Network.RIO.Service.Stub
 import Test.Tasty
 import Test.Tasty.HUnit
 import Test.Tasty.TH
@@ -47,38 +48,16 @@ data Character = Character
 instance FromJSON Character where
     parseJSON = genericParseJSON defaultOptions
 
-dummyBodyReader :: [S8.ByteString] -> IO BodyReader
-dummyBodyReader bodyChunks = do
-    rest <- newIORef (bodyChunks ++ [""])
-    return $ do
-        atomicModifyIORef' rest $ \chunks ->
-            case chunks of
-                (x:xs) -> (xs, x)
-                [] -> error "dummyBodyReader: The consumer of BodyReader eats too much"
-
-dummyService :: [S8.ByteString] -> Service IO req (Response BodyReader)
-dummyService bodyChunks = Service $ \_req respond -> do
-    bodyReader <- dummyBodyReader bodyChunks
-    respond $
-        Response
-        { responseStatus = HTTP.status200
-        , responseVersion = HTTP.HttpVersion 1 1
-        , responseHeaders = []
-        , responseCookieJar = CJ []
-        , responseBody = bodyReader
-        , responseClose' = ResponseClose $ return ()
-        }
-
 case_bsChunksResponseFilter :: Assertion
 case_bsChunksResponseFilter = do
-    let service = bsChunksResponseFilter $ dummyService body
+    let service = bsChunksResponseFilter $ makeDummyServiceFromBodyChunks body
     req <- parseRequest "http://localhost:18080"
     runService service req $ \res ->
         responseBody res @?= body
 
 case_lbsResponseFilter :: Assertion
 case_lbsResponseFilter = do
-    let service = lbsResponseFilter $ dummyService body
+    let service = lbsResponseFilter $ makeDummyServiceFromBodyChunks body
     req <- parseRequest "http://localhost:18080"
     runService service req $ \res ->
         responseBody res @?= L8.fromChunks body
@@ -91,12 +70,12 @@ jsonResponseFilterExample service = do
 
 case_jsonResponseFilter :: Assertion
 case_jsonResponseFilter = do
-    let service = jsonResponseFilter $ dummyService bodyJson
+    let service = jsonResponseFilter $ makeDummyServiceFromBodyChunks bodyJson
     jsonResponseFilterExample service
 
 case_jsonResponseFilterWithPartial :: Assertion
 case_jsonResponseFilterWithPartial = do
-    let service = jsonResponseFilter $ dummyService bodyJsonPartial
+    let service = jsonResponseFilter $ makeDummyServiceFromBodyChunks bodyJsonPartial
     jsonResponseFilterExample service
 
 fromJSONResponseFilterExample :: Service IO Request (Response (Either JSONError CharacterList)) -> Assertion
@@ -112,12 +91,12 @@ fromJSONResponseFilterExample service = do
 
 case_fromJSONResponseFilter :: Assertion
 case_fromJSONResponseFilter = do
-    let service = fromJSONResponseFilter $ dummyService bodyJson
+    let service = fromJSONResponseFilter $ makeDummyServiceFromBodyChunks bodyJson
     fromJSONResponseFilterExample service
 
 case_fromJSONResponseFilterWithPartial :: Assertion
 case_fromJSONResponseFilterWithPartial = do
-    let service = fromJSONResponseFilter $ dummyService bodyJsonPartial
+    let service = fromJSONResponseFilter $ makeDummyServiceFromBodyChunks bodyJsonPartial
     fromJSONResponseFilterExample service
 
 tests :: TestTree
