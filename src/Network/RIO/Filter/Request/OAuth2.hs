@@ -14,6 +14,7 @@ module Network.RIO.Filter.Request.OAuth2
 
 import Control.Exception
 import Data.Aeson
+import qualified Data.Aeson.Types as Aeson
 import qualified Data.ByteString.Char8 as S8
 import Data.Char
 import Data.Monoid
@@ -49,7 +50,7 @@ instance FromJSON AccessToken where
 instance ToJSON AccessToken where
     toJSON = genericToJSON genericJSONOptions
 
-genericJSONOptions :: Options
+genericJSONOptions :: Aeson.Options
 genericJSONOptions =
     defaultOptions
     {fieldLabelModifier = camelToSnakeCaseWithCommonPrefix "oauth2"}
