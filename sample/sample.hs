@@ -7,7 +7,6 @@ import qualified Data.Text as T
 import qualified Data.Text.IO as T
 import Network.RIO
 import Network.RIO.Filter.Request.OAuth1
-import Network.RIO.Filter.Response.JSON
 import Web.Twitter.Types.Lens
 
 twitterOAuth :: OAuth

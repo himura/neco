@@ -9,13 +9,10 @@ import Data.Aeson
 import Data.Aeson.Lens
 import qualified Data.ByteString.Char8 as S8
 import qualified Data.ByteString.Lazy.Char8 as L8
-import Data.IORef
 import qualified Data.Text as T
 import GHC.Generics
 import Network.HTTP.Client.Internal
-import qualified Network.HTTP.Types as HTTP
 import Network.RIO
-import Network.RIO.Filter.Response.JSON
 import Network.RIO.Service.Stub
 import Test.Tasty
 import Test.Tasty.HUnit
