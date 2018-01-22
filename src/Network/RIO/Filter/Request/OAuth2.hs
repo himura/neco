@@ -53,7 +53,7 @@ instance ToJSON AccessToken where
 genericJSONOptions :: Aeson.Options
 genericJSONOptions =
     defaultOptions
-    {fieldLabelModifier = camelToSnakeCaseWithCommonPrefix "oauth2"}
+    {Aeson.fieldLabelModifier = camelToSnakeCaseWithCommonPrefix "oauth2"}
 
 camelToSnakeCase :: String -> String
 camelToSnakeCase [] = []
