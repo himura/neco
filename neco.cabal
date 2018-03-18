@@ -2,15 +2,15 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 675309d1c70f9753ac859875d6b2ba6f154a0961862d34959bb375b95f41d85a
+-- hash: b227c5ff1332e0cce2fd9a104f13816fe775129f475652e69c91cee0f608e2a2
 
-name:           rio
+name:           neco
 version:        0.1.0.0
-synopsis:       Remote IO
-description:    Please see the README on Github at <https://github.com/himura/rio#readme>
+synopsis:       Network Client
+description:    Please see the README on Github at <https://github.com/himura/neco#readme>
 category:       Network
-homepage:       https://github.com/himura/rio#readme
-bug-reports:    https://github.com/himura/rio/issues
+homepage:       https://github.com/himura/neco#readme
+bug-reports:    https://github.com/himura/neco/issues
 author:         Takahiro Himura
 maintainer:     taka@himura.jp
 copyright:      2017 Takahiro Himura
@@ -26,7 +26,7 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/himura/rio
+  location: https://github.com/himura/neco
 
 flag build-sample
   manual: True
@@ -51,19 +51,19 @@ library
     build-depends:
         transformers
   exposed-modules:
-      Network.RIO
-      Network.RIO.Filter.Request.BasicAuth
-      Network.RIO.Filter.Request.OAuth1
-      Network.RIO.Filter.Request.OAuth2
-      Network.RIO.Filter.Response
-      Network.RIO.Filter.Response.Attoparsec
-      Network.RIO.Filter.Response.ByteString
-      Network.RIO.Filter.Response.JSON
-      Network.RIO.Service.HttpClient
-      Network.RIO.Service.Stub
-      Network.RIO.Types
+      Network.Neco
+      Network.Neco.Filter.Request.BasicAuth
+      Network.Neco.Filter.Request.OAuth1
+      Network.Neco.Filter.Request.OAuth2
+      Network.Neco.Filter.Response
+      Network.Neco.Filter.Response.Attoparsec
+      Network.Neco.Filter.Response.ByteString
+      Network.Neco.Filter.Response.JSON
+      Network.Neco.Service.HttpClient
+      Network.Neco.Service.Stub
+      Network.Neco.Types
   other-modules:
-      Paths_rio
+      Paths_neco
   default-language: Haskell2010
 
 executable sample
@@ -89,15 +89,15 @@ executable sample
     ghc-options: -threaded -rtsopts -with-rtsopts=-N
     build-depends:
         lens
-      , rio
+      , neco
       , twitter-types-lens
   else
     buildable: False
   other-modules:
-      Paths_rio
+      Paths_neco
   default-language: Haskell2010
 
-test-suite rio-test
+test-suite neco-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   hs-source-dirs:
@@ -115,8 +115,8 @@ test-suite rio-test
     , http-types
     , lens
     , lens-aeson
+    , neco
     , profunctors
-    , rio
     , tasty >=0.7
     , tasty-hunit
     , tasty-quickcheck
@@ -128,5 +128,5 @@ test-suite rio-test
   other-modules:
       Filter.Request
       Filter.Response
-      Paths_rio
+      Paths_neco
   default-language: Haskell2010

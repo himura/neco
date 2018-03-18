@@ -12,8 +12,8 @@ import qualified Data.ByteString.Lazy.Char8 as L8
 import qualified Data.Text as T
 import GHC.Generics
 import Network.HTTP.Client.Internal
-import Network.RIO
-import Network.RIO.Service.Stub
+import Network.Neco
+import Network.Neco.Service.Stub
 import Test.Tasty
 import Test.Tasty.HUnit
 import Test.Tasty.TH

@@ -1,1 +1,1 @@
-# rio: Remote IO
+# neco: Composable HTTP Client library

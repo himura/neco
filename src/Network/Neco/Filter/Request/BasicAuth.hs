@@ -1,10 +1,10 @@
-module Network.RIO.Filter.Request.BasicAuth
+module Network.Neco.Filter.Request.BasicAuth
     ( basicAuthRequestFilter
     ) where
 
 import Data.ByteString (ByteString)
 import Network.HTTP.Client
-import Network.RIO.Types
+import Network.Neco.Types
 
 basicAuthRequestFilter ::
        ByteString -- ^ username

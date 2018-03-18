@@ -3,7 +3,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE RecordWildCards #-}
 
-module Network.RIO.Filter.Request.OAuth2
+module Network.Neco.Filter.Request.OAuth2
     ( ClientSetting(..)
     , AccessToken(..)
     , authorizeUri
@@ -23,9 +23,9 @@ import qualified Data.Text.Encoding as T
 import GHC.Generics
 import Network.HTTP.Client
 import qualified Network.HTTP.Types as HT
-import Network.RIO.Filter.Response.JSON
-import Network.RIO.Service.HttpClient
-import Network.RIO.Types
+import Network.Neco.Filter.Response.JSON
+import Network.Neco.Service.HttpClient
+import Network.Neco.Types
 
 data ClientSetting =
     ClientSetting

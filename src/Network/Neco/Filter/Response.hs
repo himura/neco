@@ -1,4 +1,4 @@
-module Network.RIO.Filter.Response
+module Network.Neco.Filter.Response
        ( lbsResponseFilter
        , bsChunksResponseFilter
        , parserResponseFilter
@@ -9,6 +9,6 @@ module Network.RIO.Filter.Response
        )
        where
 
-import Network.RIO.Filter.Response.Attoparsec
-import Network.RIO.Filter.Response.ByteString
-import Network.RIO.Filter.Response.JSON
+import Network.Neco.Filter.Response.Attoparsec
+import Network.Neco.Filter.Response.ByteString
+import Network.Neco.Filter.Response.JSON

@@ -1,6 +1,6 @@
 {-# LANGUAGE RankNTypes #-}
 
-module Network.RIO.Types
+module Network.Neco.Types
     ( Service (..)
     , Filter
     , makeFilter

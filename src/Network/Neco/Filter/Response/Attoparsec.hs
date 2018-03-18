@@ -1,11 +1,11 @@
-module Network.RIO.Filter.Response.Attoparsec
+module Network.Neco.Filter.Response.Attoparsec
     ( parserResponseFilter
     ) where
 
 import Data.Attoparsec.ByteString
 import qualified Data.ByteString as S
 import Network.HTTP.Client
-import Network.RIO.Types
+import Network.Neco.Types
 
 -- for GHC 7.8
 import Control.Applicative

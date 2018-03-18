@@ -1,8 +1,8 @@
-resolver: lts-10.3
+resolver: lts-9.21
 packages:
 - .
 extra-deps: []
 flags:
-  rio:
+  neco:
     build-sample: True
 extra-package-dbs: []

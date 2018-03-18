@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
-module Network.RIO.Filter.Response.JSON
+module Network.Neco.Filter.Response.JSON
     ( JSONError (..)
     , jsonResponseFilter
     , fromJSONResponseFilter
@@ -11,8 +11,8 @@ import Control.Exception
 import Data.Aeson
 import Data.Typeable
 import Network.HTTP.Client
-import Network.RIO.Filter.Response.Attoparsec
-import Network.RIO.Types
+import Network.Neco.Filter.Response.Attoparsec
+import Network.Neco.Types
 
 data JSONError
     = JSONParseError String

@@ -5,9 +5,9 @@ module Filter.Request where
 
 import qualified Data.ByteString.Base64 as Base64
 import qualified Data.ByteString.Char8 as S8
-import Network.RIO
-import Network.RIO.Filter.Request.BasicAuth
-import Network.RIO.Filter.Request.OAuth2
+import Network.Neco
+import Network.Neco.Filter.Request.BasicAuth
+import Network.Neco.Filter.Request.OAuth2
 import Test.Tasty
 import Test.Tasty.HUnit
 import Test.Tasty.TH

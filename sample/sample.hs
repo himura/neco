@@ -5,8 +5,8 @@ import Control.Lens
 import Data.Aeson
 import qualified Data.Text as T
 import qualified Data.Text.IO as T
-import Network.RIO
-import Network.RIO.Filter.Request.OAuth1
+import Network.Neco
+import Network.Neco.Filter.Request.OAuth1
 import Web.Twitter.Types.Lens
 
 twitterOAuth :: OAuth

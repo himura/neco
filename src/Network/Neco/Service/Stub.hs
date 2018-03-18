@@ -1,4 +1,4 @@
-module Network.RIO.Service.Stub
+module Network.Neco.Service.Stub
     ( stubService
     , makeDummyServiceFromBodyChunks
     , makeDummyBodyReader
@@ -10,7 +10,7 @@ import Data.IORef
 import Network.HTTP.Client
 import Network.HTTP.Client.Internal
 import qualified Network.HTTP.Types as HTTP
-import Network.RIO.Types
+import Network.Neco.Types
 
 stubService :: Response a -> Service m Request (Response a)
 stubService res = Service $ \_req respond -> respond res

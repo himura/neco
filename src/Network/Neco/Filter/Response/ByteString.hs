@@ -1,4 +1,4 @@
-module Network.RIO.Filter.Response.ByteString
+module Network.Neco.Filter.Response.ByteString
     ( lbsResponseFilter
     , bsChunksResponseFilter
     ) where
@@ -6,7 +6,7 @@ module Network.RIO.Filter.Response.ByteString
 import qualified Data.ByteString as S
 import qualified Data.ByteString.Lazy as L
 import Network.HTTP.Client
-import Network.RIO.Types
+import Network.Neco.Types
 
 -- for GHC 7.8
 import Data.Traversable

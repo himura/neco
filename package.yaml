@@ -1,6 +1,6 @@
-name:                rio
+name:                neco
 version:             0.1.0.0
-github:              himura/rio
+github:              himura/neco
 license:             BSD3
 author:              Takahiro Himura
 maintainer:          taka@himura.jp
@@ -10,13 +10,13 @@ extra-source-files:
 - README.md
 - ChangeLog.md
 
-synopsis:            Remote IO
+synopsis:            Network Client
 category:            Network
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
-description:         Please see the README on Github at <https://github.com/himura/rio#readme>
+description:         Please see the README on Github at <https://github.com/himura/neco#readme>
 tested-with:         GHC == 7.8.4, GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.1
 
 dependencies:
@@ -58,14 +58,14 @@ executables:
             - -rtsopts
             - -with-rtsopts=-N
           dependencies:
-           - rio
+           - neco
            - lens
            - twitter-types-lens
         else:
           buildable: False
 
 tests:
-  rio-test:
+  neco-test:
     main:                Spec.hs
     source-dirs:         test
     ghc-options:
@@ -73,7 +73,7 @@ tests:
     - -rtsopts
     - -with-rtsopts=-N
     dependencies:
-    - rio
+    - neco
     - base64-bytestring
     - lens
     - lens-aeson
