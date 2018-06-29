@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: b227c5ff1332e0cce2fd9a104f13816fe775129f475652e69c91cee0f608e2a2
+-- hash: ba3438d52422ff0a3ced9fdd38d47f731439b51b36b608e6bad0e73167865c86
 
 name:           neco
 version:        0.1.0.0
@@ -16,7 +16,7 @@ maintainer:     taka@himura.jp
 copyright:      2017 Takahiro Himura
 license:        BSD3
 license-file:   LICENSE
-tested-with:    GHC == 7.8.4, GHC == 7.10.3, GHC == 8.0.2, GHC == 8.2.1
+tested-with:    GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.3
 build-type:     Simple
 cabal-version:  >= 1.10
 
