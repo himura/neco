@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: ba3438d52422ff0a3ced9fdd38d47f731439b51b36b608e6bad0e73167865c86
+-- hash: 20ff01b807d0819f034e42363c06b126806c85f1e847f8a60c3a75308f8a316d
 
 name:           neco
 version:        0.1.0.0
@@ -46,6 +46,7 @@ library
     , http-client-tls
     , http-types
     , profunctors
+    , random
     , text
   if impl(ghc < 8.0)
     build-depends:
@@ -59,6 +60,7 @@ library
       Network.Neco.Filter.Response.Attoparsec
       Network.Neco.Filter.Response.ByteString
       Network.Neco.Filter.Response.JSON
+      Network.Neco.Filter.RetryFilter
       Network.Neco.Service.HttpClient
       Network.Neco.Service.Stub
       Network.Neco.Types
@@ -81,6 +83,7 @@ executable sample
     , http-client-tls
     , http-types
     , profunctors
+    , random
     , text
   if impl(ghc < 8.0)
     build-depends:
@@ -117,6 +120,7 @@ test-suite neco-test
     , lens-aeson
     , neco
     , profunctors
+    , random
     , tasty >=0.7
     , tasty-hunit
     , tasty-quickcheck

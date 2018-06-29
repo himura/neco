@@ -29,6 +29,7 @@ dependencies:
 - http-client-tls
 - http-types
 - profunctors
+- random
 - text
 
 when:
