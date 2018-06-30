@@ -1,6 +1,7 @@
 module Network.Neco.Filter.RetryFilter where
 
 import Control.Concurrent
+import Control.Exception
 import Network.Neco.Types
 import System.Random
 
@@ -9,7 +10,7 @@ newtype RetryPolicy m res = RetryPolicy
     }
 
 newtype RetryHandler res = RetryHandler
-    { applyRetryPolicy :: res -> Maybe (Int, RetryHandler res)
+    { applyRetryPolicy :: Either SomeException res -> Maybe (Int, RetryHandler res)
     }
 
 type RetryBackoff = [Int]
@@ -30,7 +31,7 @@ jitteredBackoff base cap = go base
 
 maxAttemptRetryHandler ::
        Int -- ^ max attempts
-    -> (res -> Bool) -- ^ response classifier. if it True then retry.
+    -> (Either SomeException res -> Bool) -- ^ response classifier. if it True then retry.
     -> RetryBackoff
     -> RetryHandler res
 maxAttemptRetryHandler maxAttempts shouldRetry bareBackoff =
@@ -44,7 +45,7 @@ maxAttemptRetryHandler maxAttempts shouldRetry bareBackoff =
 
 maxAttemptRetryPolicy ::
        Int -- ^ max attempts
-    -> (res -> Bool) -- ^ response classifier. if it True then retry.
+    -> (Either SomeException res -> Bool) -- ^ response classifier. if it True then retry.
     -> (StdGen -> RetryBackoff)
     -> RetryPolicy IO res
 maxAttemptRetryPolicy maxAttempts shouldRetry backoffGenerator =
@@ -65,12 +66,21 @@ retryFilter retryPolicy service =
         go retryHandler req respond
   where
     go handler req respond = do
-        resOrRetry <-
+        resOrException <-
+            try $
             runService service req $ \res -> do
-                case applyRetryPolicy handler res of
+                case applyRetryPolicy handler (Right res) of
                     Just (wait, nextHandler) ->
                         return $ Left (wait, nextHandler)
                     Nothing -> Right <$> respond res
+        resOrRetry <-
+            case resOrException of
+                Left exc ->
+                    case applyRetryPolicy handler (Left exc) of
+                        Just (wait, nextHandler) ->
+                            return $ Left (wait, nextHandler)
+                        Nothing -> throwIO exc
+                Right r -> return r
         case resOrRetry of
             Left (wait, nextHandler) -> do
                 threadDelay wait

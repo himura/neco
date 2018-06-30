@@ -2,7 +2,7 @@
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 20ff01b807d0819f034e42363c06b126806c85f1e847f8a60c3a75308f8a316d
+-- hash: 603d7cc1fc7a2e92158738c14455d1660e8d574a3201b5747a93674b71c72de7
 
 name:           neco
 version:        0.1.0.0
@@ -132,5 +132,6 @@ test-suite neco-test
   other-modules:
       Filter.Request
       Filter.Response
+      Filter.RetryFilter
       Paths_neco
   default-language: Haskell2010
