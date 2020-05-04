@@ -1,11 +1,13 @@
--- This file has been generated from package.yaml by hpack version 0.20.0.
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.33.0.
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 603d7cc1fc7a2e92158738c14455d1660e8d574a3201b5747a93674b71c72de7
+-- hash: 257131bffa35e05781c4f0e02fef149db51337c6c62acda89dd83d445ce3895e
 
 name:           neco
-version:        0.1.0.0
+version:        0.1.1.0
 synopsis:       Network Client
 description:    Please see the README on Github at <https://github.com/himura/neco#readme>
 category:       Network
@@ -18,11 +20,9 @@ license:        BSD3
 license-file:   LICENSE
 tested-with:    GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.3
 build-type:     Simple
-cabal-version:  >= 1.10
-
 extra-source-files:
-    ChangeLog.md
     README.md
+    ChangeLog.md
 
 source-repository head
   type: git
@@ -60,6 +60,7 @@ library
       Network.Neco.Filter.Response.Attoparsec
       Network.Neco.Filter.Response.ByteString
       Network.Neco.Filter.Response.JSON
+      Network.Neco.Filter.Response.ResponseCheck
       Network.Neco.Filter.RetryFilter
       Network.Neco.Service.HttpClient
       Network.Neco.Service.Stub
