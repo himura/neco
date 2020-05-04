@@ -1,6 +1,7 @@
 module Network.Neco.Filter.Response.ByteString
     ( lbsResponseFilter
     , bsChunksResponseFilter
+    , consumeBodyReader
     ) where
 
 import qualified Data.ByteString as S
