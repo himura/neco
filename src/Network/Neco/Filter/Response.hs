@@ -4,7 +4,9 @@ module Network.Neco.Filter.Response
        , parserResponseFilter
        , JSONError (..)
        , jsonResponseFilter
+       , jsonResponseThrowFilter
        , fromJSONResponseFilter
+       , fromJSONResponseThrowFilter
        , fromJSONResponseFilter'
        )
        where

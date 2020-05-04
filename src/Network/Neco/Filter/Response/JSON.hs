@@ -3,7 +3,9 @@
 module Network.Neco.Filter.Response.JSON
     ( JSONError (..)
     , jsonResponseFilter
+    , jsonResponseThrowFilter
     , fromJSONResponseFilter
+    , fromJSONResponseThrowFilter
     , fromJSONResponseFilter'
     ) where
 
@@ -24,10 +26,19 @@ jsonResponseFilter ::
        Filter IO i i (Response BodyReader) (Response (Either String Value))
 jsonResponseFilter = parserResponseFilter json
 
+jsonResponseThrowFilter ::
+       Filter IO i i (Response BodyReader) (Response Value)
+jsonResponseThrowFilter = eitherLeftToThrowFilter JSONParseError . jsonResponseFilter
+
 fromJSONResponseFilter ::
        FromJSON a
     => Filter IO i i (Response BodyReader) (Response (Either JSONError a))
 fromJSONResponseFilter = fmapResponseFilter fromJSONResponseFilter' . jsonResponseFilter
+
+fromJSONResponseThrowFilter ::
+       FromJSON a
+    => Filter IO i i (Response BodyReader) (Response a)
+fromJSONResponseThrowFilter = eitherLeftToThrowFilter id . fromJSONResponseFilter
 
 fromJSONResponseFilter' ::
        FromJSON a
@@ -40,3 +51,10 @@ fromJSONEither (Right value) =
     case fromJSON value of
         Success body -> Right body
         Error err -> Left $ FromJSONError err value
+
+eitherLeftToThrowFilter :: Exception exc => (err -> exc) -> Filter IO i i (Response (Either err b)) (Response b)
+eitherLeftToThrowFilter toExc =
+    makeResponseFilterM $ \res ->
+        case responseBody res of
+            Left err -> throwIO $ toExc err
+            Right body -> return $ res {responseBody = body}
