@@ -1,5 +1,3 @@
-{-# LANGUAGE DeriveDataTypeable #-}
-
 module Network.Neco.Filter.Response.JSON
     ( JSONError (..)
     , jsonResponseFilter
@@ -11,16 +9,11 @@ module Network.Neco.Filter.Response.JSON
 
 import Control.Exception
 import Data.Aeson
-import Data.Typeable
 import Network.HTTP.Client
+import Network.Neco.Exceptions
 import Network.Neco.Filter.Response.Attoparsec
+import Network.Neco.Internal
 import Network.Neco.Types
-
-data JSONError
-    = JSONParseError String
-    | FromJSONError String Value
-    deriving (Eq, Show, Typeable)
-instance Exception JSONError
 
 jsonResponseFilter ::
        Filter IO i i (Response BodyReader) (Response (Either String Value))

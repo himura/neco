@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 257131bffa35e05781c4f0e02fef149db51337c6c62acda89dd83d445ce3895e
+-- hash: 64adf47da0ac989755e0a7a222f9979cb6f6b64ca6f68c67b6af86baa27ba722
 
 name:           neco
 version:        0.1.1.0
@@ -53,6 +53,7 @@ library
         transformers
   exposed-modules:
       Network.Neco
+      Network.Neco.Exceptions
       Network.Neco.Filter.Request.BasicAuth
       Network.Neco.Filter.Request.OAuth1
       Network.Neco.Filter.Request.OAuth2
@@ -62,6 +63,7 @@ library
       Network.Neco.Filter.Response.JSON
       Network.Neco.Filter.Response.ResponseCheck
       Network.Neco.Filter.RetryFilter
+      Network.Neco.Internal
       Network.Neco.Service.HttpClient
       Network.Neco.Service.Stub
       Network.Neco.Types

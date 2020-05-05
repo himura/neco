@@ -7,6 +7,7 @@ module Network.Neco.Filter.Response.ByteString
 import qualified Data.ByteString as S
 import qualified Data.ByteString.Lazy as L
 import Network.HTTP.Client
+import Network.Neco.Internal
 import Network.Neco.Types
 
 -- for GHC 7.8

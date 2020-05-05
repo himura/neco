@@ -10,6 +10,7 @@ module Network.Neco
 
     , httpClientService
 
+    , module Network.Neco.Exceptions
     , module Network.Neco.Filter.Response
 
     -- * re-exports
@@ -17,8 +18,10 @@ module Network.Neco
     , tlsManagerSettings
     ) where
 
-import Network.Neco.Types
-import Network.Neco.Service.HttpClient
-import Network.Neco.Filter.Response
 import Network.HTTP.Client
 import Network.HTTP.Client.TLS
+import Network.Neco.Exceptions
+import Network.Neco.Filter.Response
+import Network.Neco.Internal
+import Network.Neco.Service.HttpClient
+import Network.Neco.Types

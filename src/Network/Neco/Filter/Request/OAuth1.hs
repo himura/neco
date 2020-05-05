@@ -5,6 +5,7 @@ module Network.Neco.Filter.Request.OAuth1
     ) where
 
 import Network.HTTP.Client
+import Network.Neco.Internal
 import Network.Neco.Types
 import Web.Authenticate.OAuth
 

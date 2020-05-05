@@ -24,6 +24,7 @@ import GHC.Generics
 import Network.HTTP.Client
 import qualified Network.HTTP.Types as HT
 import Network.Neco.Filter.Response.JSON
+import Network.Neco.Internal
 import Network.Neco.Service.HttpClient
 import Network.Neco.Types
 

@@ -3,6 +3,7 @@ module Network.Neco.Filter.Response
        , bsChunksResponseFilter
        , parserResponseFilter
        , JSONError (..)
+       , HTTPStatusException
        , jsonResponseFilter
        , jsonResponseThrowFilter
        , fromJSONResponseFilter

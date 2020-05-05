@@ -5,6 +5,7 @@ module Network.Neco.Filter.Response.Attoparsec
 import Data.Attoparsec.ByteString
 import qualified Data.ByteString as S
 import Network.HTTP.Client
+import Network.Neco.Internal
 import Network.Neco.Types
 
 -- for GHC 7.8

@@ -4,6 +4,7 @@ module Network.Neco.Filter.Request.BasicAuth
 
 import Data.ByteString (ByteString)
 import Network.HTTP.Client
+import Network.Neco.Internal
 import Network.Neco.Types
 
 basicAuthRequestFilter ::

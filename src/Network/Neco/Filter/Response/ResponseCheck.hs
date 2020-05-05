@@ -9,6 +9,7 @@ import Control.Exception
 import qualified Data.ByteString.Lazy as L
 import Network.HTTP.Client
 import qualified Network.HTTP.Types as HTTPTypes
+import Network.Neco.Exceptions
 import Network.Neco.Filter.Response.ByteString
 import Network.Neco.Types
 
@@ -23,16 +24,6 @@ responseCheckFilter checker (Service service) =
 
 responseStatusCheckFilter :: Filter IO Request Request (Response BodyReader) (Response BodyReader)
 responseStatusCheckFilter = responseCheckFilter responseStatusChecker
-
-data HTTPStatusException =
-    HTTPStatusException
-        { errorResponseStatusCode :: HTTPTypes.Status
-        , errorResponseHeaders :: [HTTPTypes.Header]
-        , errorResponseBody :: L.ByteString
-        , errorRequest :: Request
-        }
-    deriving (Show)
-instance Exception HTTPStatusException
 
 responseStatusChecker :: Request -> Response BodyReader -> IO ()
 responseStatusChecker req res
