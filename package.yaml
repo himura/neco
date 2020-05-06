@@ -17,7 +17,7 @@ category:            Network
 # complications of embedding Haddock markup inside cabal files, it is
 # common to point users to the README.md file.
 description:         Please see the README on Github at <https://github.com/himura/neco#readme>
-tested-with:         GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.3
+tested-with:         GHC == 8.4.4, GHC == 8.6.5, GHC == 8.8.3
 
 dependencies:
 - base >= 4.7 && < 5
@@ -31,11 +31,6 @@ dependencies:
 - profunctors
 - random
 - text
-
-when:
-  - condition: impl(ghc < 8.0)
-    dependencies:
-      - transformers
 
 flags:
   build-sample:

@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 64adf47da0ac989755e0a7a222f9979cb6f6b64ca6f68c67b6af86baa27ba722
+-- hash: 7ea88563033ca47c86d29adde06b8ced42d504691cd48168c51c739d8212ca87
 
 name:           neco
 version:        0.1.1.0
@@ -18,7 +18,7 @@ maintainer:     taka@himura.jp
 copyright:      2017 Takahiro Himura
 license:        BSD3
 license-file:   LICENSE
-tested-with:    GHC == 8.0.2, GHC == 8.2.2, GHC == 8.4.3
+tested-with:    GHC == 8.4.4, GHC == 8.6.5, GHC == 8.8.3
 build-type:     Simple
 extra-source-files:
     README.md
@@ -48,9 +48,6 @@ library
     , profunctors
     , random
     , text
-  if impl(ghc < 8.0)
-    build-depends:
-        transformers
   exposed-modules:
       Network.Neco
       Network.Neco.Exceptions
@@ -88,9 +85,6 @@ executable sample
     , profunctors
     , random
     , text
-  if impl(ghc < 8.0)
-    build-depends:
-        transformers
   if flag(build-sample)
     ghc-options: -threaded -rtsopts -with-rtsopts=-N
     build-depends:
@@ -129,9 +123,6 @@ test-suite neco-test
     , tasty-quickcheck
     , tasty-th
     , text
-  if impl(ghc < 8.0)
-    build-depends:
-        transformers
   other-modules:
       Filter.Request
       Filter.Response
