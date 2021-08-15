@@ -43,7 +43,7 @@ instance ToJSON ClientSetting where
 data AccessToken = AccessToken
     { oauth2AccessToken :: String
     , oauth2ExpiresIn :: Int
-    , oauth2RefleshToken :: String
+    , oauth2RefreshToken :: String
     , oauth2TokenType :: String
     } deriving (Eq, Show, Read, Generic)
 instance FromJSON AccessToken where
